@@ -1,7 +1,4 @@
-# BEB-05-first-10
-BEB-05-first-10
-
-# 프로젝트: OpenSea Clone Coding
+# Codestates 첫번째 프로젝트: OpenSea Clone Coding
 
 <p align="center">
   <br>
@@ -10,12 +7,18 @@ BEB-05-first-10
   <br>
 </p>
 
-목차
+## 목차
+- [프로젝트 소개](#프로젝트-소개)
+- [기술 스택](#기술-스택)
+- [구현 기능](#구현-기능)
+- [팀원](#팀원)
+
+<br>
 
 ## 프로젝트 소개
 
 <p align="justify">
-프로젝트 개요/동기 (작성중...)
+(...작성필요...)
 </p>
 
 <br>
@@ -40,13 +43,11 @@ BEB-05-first-10
 
 <br>
 
-## 배운 점 & 아쉬운 점
-
-<p align="justify">
-
-</p>
-
-<br>
+## 팀원
+[@Moshed-Potato](https://github.com/Moshed-Potato)  
+[@JoungDongHee](https://github.com/JoungDongHee)  
+[@ianshin21](https://github.com/ianshin21)  
+[@K Park](https://github.com/parkkibaek)  
 
 
 <!-- Stack Icon Refernces -->
