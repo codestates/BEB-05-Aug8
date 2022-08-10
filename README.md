@@ -5,7 +5,7 @@ BEB-05-first-10
 
 <p align="center">
   <br>
-  <img src="https://1000logos.net/wp-content/uploads/2022/05/OpenSea-Logo.jpg">
+  <img src="[https://1000logos.net/wp-content/uploads/2022/05/OpenSea-Logo.jpg](https://storage.googleapis.com/opensea-static/Logomark/OpenSea-Full-Logo%20(dark).png)">
   <br>
 </p>
 
