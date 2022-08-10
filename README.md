@@ -5,7 +5,7 @@ BEB-05-first-10
 
 <p align="center">
   <br>
-  <img src="https://lh3.googleusercontent.com/j_my7l20MGXQdLbQfyogLI-GIIUW3Hppm1cVy9IcX6g2JPyJFZxqmYMwRQPEglACLGulQOXL-rNT4LgZ_ZW59z15dzNBZjgmQjc_XtE=w600" width="600" height="120">
+  <img src="https://lh3.googleusercontent.com/j_my7l20MGXQdLbQfyogLI-GIIUW3Hppm1cVy9IcX6g2JPyJFZxqmYMwRQPEglACLGulQOXL-rNT4LgZ_ZW59z15dzNBZjgmQjc_XtE=w600" width="600" height="200">
   
   <br>
 </p>
