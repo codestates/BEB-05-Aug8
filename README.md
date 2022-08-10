@@ -5,7 +5,7 @@ BEB-05-first-10
 
 <p align="center">
   <br>
-  <img src="https://assets-global.website-files.com/5f973c970bea5548ad4287ef/61ddc01e319b7094d4dfa07f_OpenSea-Full-Logo%20(dark).png" width="600" height="200">
+  <img src="https://lh3.googleusercontent.com/j_my7l20MGXQdLbQfyogLI-GIIUW3Hppm1cVy9IcX6g2JPyJFZxqmYMwRQPEglACLGulQOXL-rNT4LgZ_ZW59z15dzNBZjgmQjc_XtE=w600" width="600" height="120">
   
   <br>
 </p>
