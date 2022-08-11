@@ -1,17 +1,12 @@
-import './App.css';
+import './MyCollections.css';
 import {useEffect, useState} from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Web3 from 'web3';
-import erc721Abi from './erc721Abi';
-import TokenList from './components/TokenList';
-import Header from './components/Header';
-import Explore from './pages/Explore';
-import Create from './pages/Create';
-import MyCollections from './pages/MyCollections';
+import erc721Abi from '../erc721Abi';
+import TokenList from '../components/TokenList';
 
 // contract address
 // 0xEef7C01b329BcEc42CfFA7fF1F318f47c16c0f7E
-function App() {
+function MyCollections() {
   const [web3, setWeb3] = useState();
   const [account, setAccount] = useState('연결 안 됨');
   const [newErc721addr, setNewErc721Addr] = useState();
@@ -63,16 +58,29 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
-        <Header></Header>
-        <Routes>
-          <Route path='/' element={<Explore />}></Route>
-          <Route path='/create/*' element={<Create />}></Route>
-          <Route path='/my-collections/*' element={<MyCollections />}></Route>
-        </Routes>
-      </BrowserRouter>
+      <button 
+        className="metaConnect"
+        onClick={() => {
+          connectWallet();
+        }}
+      >
+        connect to MetaMask
+      </button>
+      <div className='userInfo'>주소: {account}</div>
+
+      <div className='newErc721'>
+        <input
+          type="text"
+          onChange={(e) => {
+            setNewErc721Addr(e.target.value);
+          }}
+        ></input>
+        <button onClick={addNewErc721Token}>add new erc721</button>
+      </div>
+
+      <TokenList web3={web3} account={account} erc721list={erc721list}></TokenList>
     </div>
   );
 }
 
-export default App;
+export default MyCollections;

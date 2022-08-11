@@ -1,0 +1,27 @@
+header {  
+  padding: 1rem;
+  background-color: rgb(255, 255, 255);
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  box-shadow: rgb(4 17 29 / 25%) 0px 0px 8px 0px;
+  max-width: 100vw;
+  height: 60px;
+  top: 0px;
+}
+
+h1, p {
+  margin: 0;
+}
+
+li {
+  margin: 10px;
+  display: inline;
+}
+
+.Opensea-logo {
+  height: 50px;
+  
+}
