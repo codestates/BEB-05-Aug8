@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "BEB-05-Aug8 Backend",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
