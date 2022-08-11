@@ -1,12 +1,12 @@
-import './App.css';
+import './MyCollections.css';
 import {useEffect, useState} from 'react';
 import Web3 from 'web3';
-import erc721Abi from './erc721Abi';
-import TokenList from './components/TokenList';
+import erc721Abi from '../erc721Abi';
+import TokenList from '../components/TokenList';
 
 // contract address
 // 0xEef7C01b329BcEc42CfFA7fF1F318f47c16c0f7E
-function App() {
+function MyCollections() {
   const [web3, setWeb3] = useState();
   const [account, setAccount] = useState('연결 안 됨');
   const [newErc721addr, setNewErc721Addr] = useState();
@@ -83,4 +83,4 @@ function App() {
   );
 }
 
-export default App;
+export default MyCollections;
