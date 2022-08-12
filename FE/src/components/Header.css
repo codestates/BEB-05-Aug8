@@ -10,6 +10,7 @@ header {
   max-width: 100vw;
   height: 60px;
   top: 0px;
+  z-index: 1;
 }
 
 h1, p {
