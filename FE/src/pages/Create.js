@@ -1,48 +1,33 @@
 import {
     FormControl,
-    InputLabel,
     Stack,
-    FormHelperText,
-    Select,
-    MenuItem,
     Button,
     Alert,
     Input,
   } from "@mui/material";
   import { useState } from "react";
-  import { File, Blob } from "@web-std/file"
   import InputForm from "../components/inputForm.js";
-  import erc721Abi from "../erc721Abi";
   import CircularProgress from "@material-ui/core/CircularProgress";
   import SuccessMinting from "../components/SuccessMinting";
-  import { NFTStorage } from 'nft.storage';
+  import { NFTStorage } from "nft.storage/dist/bundle.esm.min.js";
+  import axios from "axios";
   const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEJCYzIxRTAxYUM3RGNFMjdGYWUyQTczQjIxZUE2RjMyQmMxOWQ2NjAiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY2MDE5NTI5NDUyNSwibmFtZSI6Ik5GVHRlc3QifQ.HCOHDRpYcqw2oLDPkR6_N1HDpc26XY_yIjmQVd8DYXc'
 
   
   function Create({ account, web3, caver }) {
-    const nft = new NFTStorage({
-      endpoint: 'https://api.nft.storage',
-      API_KEY
-    });
     const baseImage =
       "https://cdn.pixabay.com/photo/2016/01/03/00/43/upload-1118928_960_720.png";
     const [imgSrc, setImgSrc] = useState(baseImage);
-    const [fileBlob, setFileBlob] = useState("");
-    const [imgUrl, setImgUrl] = useState("");
     const [nftName, setNftName] = useState("");
-    const [externalLink, setExternalLink] = useState("");
     const [description, setDescription] = useState("");
     const [alert, setAlert] = useState(false);
     const [waitNftMinting, setWaitNftMinting] = useState(false);
     const [successMinting, setSuccessMinting] = useState(false);
-    const [newErc721addr, setNewErc721addr] = useState();
 
     const handleImagePreview = (target) => { // blob 변환 
       const fileBlob = target.files[0];
-      setFileBlob(fileBlob);
       const reader = new FileReader();
       reader.readAsDataURL(fileBlob);
-      console.log(reader);
       return new Promise((resolve) => {
         reader.onload = () => {
           setImgSrc(reader.result);
@@ -53,9 +38,6 @@ import {
   
     const handleChangeNftName = (target) => {
       setNftName(target.value);
-    };
-    const handleChangeExternalLink = (target) => {
-      setExternalLink(target.value);
     };
   
     const handleChangeDescription = (target) => {
@@ -68,32 +50,50 @@ import {
         } else {
             setAlert(false);
             try {
-            console.log("uploadFiles === "+ fileBlob);
+            const file = document.getElementById('nft-image').files[0];
             const storageNft = {
-              image: fileBlob,
+              image: file,
               name: nftName,
               description: description,
-              properties : {
-                blockchain: "Ethereum",
-                token_type: "Erc-721",
-              }
             }
-            console.log(storageNft);
             const client = new NFTStorage({ token: API_KEY })
-            const metadata = await nft.storeDirectory(storageNft)
+            const metadata = await client.store(storageNft)
           
-            console.log('NFT data stored!')
-            console.log('Metadata URI: ', metadata.url)
+            console.log(typeof(metadata));
+            console.log('NFT data stored!');
+            console.log('IPFS URL for the metadata:', metadata.url);
+            console.log('metadata.json contents:\n', metadata.data);
 
-            // const metaRecv = JSON.stringify(metadata);
-            // console.log(metaRecv);
-            //const added2 = await client.add(metaRecv);
-            // setWaitNftMinting(true);
-            // setSuccessMinting(false);
-            // const nft = await tokenContract.methods
-            //      .mintNFT(account, tokenURI)
-            //      .send({ from: account });
-            // setSuccessMinting(true);
+            const jsonData = JSON.stringify(metadata.data);
+            const obj = JSON.parse(jsonData);
+            const replaceUrl = obj.image.replace("ipfs://","https://ipfs.io/ipfs/");
+
+            var data = JSON.stringify({
+              "tokenId": "1",
+              "name": obj.name,
+              "imageUrl": replaceUrl,
+              "description": obj.description
+            });
+            
+            var config = {
+              method: 'post',
+              url: 'http://ec2-43-200-175-29.ap-northeast-2.compute.amazonaws.com/nft-metadata',
+              headers: { 
+                'Content-Type': 'application/json'
+              },
+              data : data
+            };
+            
+            axios(config)
+            .then(function (response) {
+              console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+            
+            setSuccessMinting(true);
+            
             } catch (error) {
             console.log("Error: ", error);
             }
@@ -120,13 +120,6 @@ import {
         type: "text",
         handler: handleChangeNftName,
         helperText: "NFT의 이름을 입력해주세요",
-      },
-      {
-        content: "External-Link",
-        id: "external-link",
-        type: "url",
-        handler: handleChangeExternalLink,
-        helperText: "외부 링크를 입력해주세요",
       },
       {
         content: "Description",
