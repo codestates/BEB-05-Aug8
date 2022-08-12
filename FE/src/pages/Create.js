@@ -5,16 +5,18 @@ import {
     Alert,
     Input,
   } from "@mui/material";
-  import { useState } from "react";
+  import { useState, useEffect } from "react";
   import InputForm from "../components/inputForm.js";
   import CircularProgress from "@material-ui/core/CircularProgress";
   import SuccessMinting from "../components/SuccessMinting";
   import { NFTStorage } from "nft.storage/dist/bundle.esm.min.js";
-  import axios from "axios";
-  const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEJCYzIxRTAxYUM3RGNFMjdGYWUyQTczQjIxZUE2RjMyQmMxOWQ2NjAiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY2MDE5NTI5NDUyNSwibmFtZSI6Ik5GVHRlc3QifQ.HCOHDRpYcqw2oLDPkR6_N1HDpc26XY_yIjmQVd8DYXc'
+  import erc721Abi from "../erc721Abi.js";
+  import Web3 from 'web3';
 
-  
-  function Create({ account, web3, caver }) {
+  import axios from "axios";
+  const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEJCYzIxRTAxYUM3RGNFMjdGYWUyQTczQjIxZUE2RjMyQmMxOWQ2NjAiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY2MDE5NTI5NDUyNSwibmFtZSI6Ik5GVHRlc3QifQ.HCOHDRpYcqw2oLDPkR6_N1HDpc26XY_yIjmQVd8DYXc';
+
+  function Create() {
     const baseImage =
       "https://cdn.pixabay.com/photo/2016/01/03/00/43/upload-1118928_960_720.png";
     const [imgSrc, setImgSrc] = useState(baseImage);
@@ -23,6 +25,18 @@ import {
     const [alert, setAlert] = useState(false);
     const [waitNftMinting, setWaitNftMinting] = useState(false);
     const [successMinting, setSuccessMinting] = useState(false);
+    const [web3, setWeb3] = useState();
+
+    useEffect(() => {
+      if(typeof window.ethereum !== "undefined"){
+        try{
+          const web = new Web3(window.ethereum);
+          setWeb3(web);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    }, []);
 
     const handleImagePreview = (target) => { // blob 변환 
       const fileBlob = target.files[0];
@@ -44,55 +58,84 @@ import {
       setDescription(target.value);
     };
   
+    async function mintNft(imageUrl) {
+      // 1. metamask 연결 => accounts[0]이 연결된 account
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      console.log(accounts[0]);
+  
+      // 2. minting
+      const tokenContract = await new web3.eth.Contract(
+        erc721Abi,
+        '0xEef7C01b329BcEc42CfFA7fF1F318f47c16c0f7E'
+      );
+      try{
+        const newTokenId = await tokenContract.methods.mintNFT(accounts[0], imageUrl).send({from:accounts[0]});
+        console.log("Minting Success");
+        return newTokenId;
+      } catch(e) {
+        console.error(e);
+      }
+    }
+
     const handleCreateButton = async () => {
-        if (account === "" || imgSrc === baseImage || nftName === "") {
+        if (imgSrc === baseImage || nftName === "") {
             setAlert(true);
         } else {
             setAlert(false);
             try {
-            const file = document.getElementById('nft-image').files[0];
-            const storageNft = {
-              image: file,
-              name: nftName,
-              description: description,
-            }
-            const client = new NFTStorage({ token: API_KEY })
-            const metadata = await client.store(storageNft)
-          
-            console.log(typeof(metadata));
-            console.log('NFT data stored!');
-            console.log('IPFS URL for the metadata:', metadata.url);
-            console.log('metadata.json contents:\n', metadata.data);
+              setWaitNftMinting(true);
+              // 1. 파일 받기
+              const file = document.getElementById('nft-image').files[0];
 
-            const jsonData = JSON.stringify(metadata.data);
-            const obj = JSON.parse(jsonData);
-            const replaceUrl = obj.image.replace("ipfs://","https://ipfs.io/ipfs/");
+              // 2. nft.storage에 사진 저장 후 url 받기
+              const storageNft = {
+                image: file,
+                name: nftName,
+                description: description,
+              }
+              const client = new NFTStorage({ token: API_KEY })
+              const metadata = await client.store(storageNft)
+            
+              console.log(typeof(metadata));
+              console.log('NFT data stored!');
+              console.log('IPFS URL for the metadata:', metadata.url);
+              console.log('metadata.json contents:\n', metadata.data);
 
-            var data = JSON.stringify({
-              "tokenId": "1",
-              "name": obj.name,
-              "imageUrl": replaceUrl,
-              "description": obj.description
-            });
-            
-            var config = {
-              method: 'post',
-              url: 'http://ec2-43-200-175-29.ap-northeast-2.compute.amazonaws.com/nft-metadata',
-              headers: { 
-                'Content-Type': 'application/json'
-              },
-              data : data
-            };
-            
-            axios(config)
-            .then(function (response) {
-              console.log(JSON.stringify(response.data));
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-            
-            setSuccessMinting(true);
+              // 3. 해당 url 활용해서 민팅하기
+              const jsonData = JSON.stringify(metadata.data);
+              const obj = JSON.parse(jsonData);
+              const replaceUrl = obj.image.replace("ipfs://","https://ipfs.io/ipfs/");
+              
+              await mintNft(replaceUrl);
+
+              // 4. DB에 메타데이터 저장
+              var data = JSON.stringify({
+                "tokenId": "1",
+                "name": obj.name,
+                "imageUrl": replaceUrl,
+                "description": obj.description
+              });
+              
+              var config = {
+                method: 'post',
+                url: 'http://ec2-43-200-175-29.ap-northeast-2.compute.amazonaws.com/nft-metadata',
+                headers: { 
+                  'Content-Type': 'application/json'
+                },
+                data : data
+              };
+              
+              await axios(config)
+              .then(function (response) {
+                console.log(JSON.stringify(response.data));
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+              
+              setSuccessMinting(true);
             
             } catch (error) {
             console.log("Error: ", error);
