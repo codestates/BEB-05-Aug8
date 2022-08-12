@@ -1,6 +1,7 @@
-// firebase 기본 접속
+// firebase 연결
 import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
+import { getFirestore } from "firebase/firestore";
 import dotenv from "dotenv";
 
 const firebaseConfig = {
@@ -15,3 +16,4 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const db = getDatabase(app);
+export const dbService = getFirestore(app);

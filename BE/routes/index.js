@@ -1,9 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const nftRouter = require('./nft-metadata');
-const mintingRouter = require('./minting');
+import { Router } from 'express';
+const router = Router();
+import nftRouter from './nft-metadata.js';
+import mintingRouter from './minting.js';
 
 router.use('/nft-metadata', nftRouter);
 router.use('/minting', mintingRouter);
 
-module.exports = router;
+export default router;

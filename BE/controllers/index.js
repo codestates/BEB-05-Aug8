@@ -15,10 +15,10 @@ const controller = {
       const { tokenId, name, imageUrl, description } = req.body;
       try{
         await writeNftData(tokenId, name, imageUrl, description);
-        return res.status(200).send("Write DONE");
+        return res.status(200).send("🌊Write DONE");
       } catch (e) {
         console.error(e);
-        return res.status(500).send("Server ERROR!");
+        return res.status(500).send("⚠️Server ERROR!");
       }
     }
   },

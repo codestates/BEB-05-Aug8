@@ -1,7 +1,8 @@
-const router = require('express').Router();
-const controller = require('./../controllers');
+import { Router } from 'express';
+const router = Router();
+import { controller } from './../controllers/index.js';
 
 // GET /items Router와 Controller를 연결합니다.
-router.get('/', controller.minting.get);
+router.post('/', controller.minting.post);
 
-module.exports = router;
+export default router;
