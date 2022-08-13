@@ -33,9 +33,14 @@
 
 ## 구현 기능
 
-### 기능 1
+## FE
+### 1. Explore
+### 2. Create
+### 3. My Collections
 
-### 기능 2
+## BE
+Node.js Express를 활용해서 작성하였으며, AWS EC2를 활용해서 통신 중입니다.  
+DB는 Firebase를 활용해서 구축했습니다.
 
 ### 기능 3
 
