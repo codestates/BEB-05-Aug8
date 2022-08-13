@@ -2,7 +2,7 @@
 
 <p align="center">
   <br>
-  <img src="https://lh3.googleusercontent.com/j_my7l20MGXQdLbQfyogLI-GIIUW3Hppm1cVy9IcX6g2JPyJFZxqmYMwRQPEglACLGulQOXL-rNT4LgZ_ZW59z15dzNBZjgmQjc_XtE=w600" width="600" height="200">
+  <img src="https://lh3.googleusercontent.com/j_my7l20MGXQdLbQfyogLI-GIIUW3Hppm1cVy9IcX6g2JPyJFZxqmYMwRQPEglACLGulQOXL-rNT4LgZ_ZW59z15dzNBZjgmQjc_XtE=w600" width="50%" height="50%">
   
   <br>
 </p>
@@ -34,11 +34,14 @@ OpenSea의 아키텍처와 기능을 따라 구현해보는 프로젝트입니�
 ## 구현 기능
 
 ## FE
+<img src="/images/stack/FE-structure.png" width="70%" height="70%">
+
 ### 1. Explore
 ### 2. Create
 ### 3. My Collections
 
 ## BE
+<img src="/images/stack/BE-structure.png" width="70%" height="70%">
 Node.js Express를 활용해서 작성하였으며, AWS EC2를 활용해서 통신 중입니다.  
 DB는 Firebase를 활용해서 구축했습니다.
 
