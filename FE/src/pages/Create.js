@@ -64,6 +64,16 @@ import {
         method: "eth_requestAccounts",
       });
       console.log(accounts[0]);
+
+      // 1-1. ropsten network가 아니라면 전환
+      const chainId = await window.ethereum.request({ method: "eth_chainId" })
+      console.log("chainId: ", chainId);
+      if(chainId !== '0x3'){
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{chainId: '0x3'}],
+        });
+      }
   
       // 2. minting
       const tokenContract = await new web3.eth.Contract(
@@ -73,7 +83,7 @@ import {
       try{
         const newTokenId = await tokenContract.methods.mintNFT(accounts[0], imageUrl).send({from:accounts[0]});
         console.log("Minting Success");
-        return newTokenId;
+        return [accounts[0], newTokenId.events.Transfer.returnValues.tokenId];
       } catch(e) {
         console.error(e);
       }
@@ -108,14 +118,17 @@ import {
               const obj = JSON.parse(jsonData);
               const replaceUrl = obj.image.replace("ipfs://","https://ipfs.io/ipfs/");
               
-              await mintNft(replaceUrl);
+              const mintResult = await mintNft(replaceUrl);
+              const ownerAccount = mintResult[0];
+              const tokenId = mintResult[1];
 
               // 4. DB에 메타데이터 저장
               var data = JSON.stringify({
-                "tokenId": "1",
+                "tokenId": tokenId,
                 "name": obj.name,
                 "imageUrl": replaceUrl,
-                "description": obj.description
+                "description": obj.description,
+                "owner": ownerAccount
               });
               
               var config = {

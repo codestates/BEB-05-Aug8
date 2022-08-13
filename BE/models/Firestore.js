@@ -2,14 +2,15 @@ import { collection, addDoc, getDocs } from "@firebase/firestore";
 import { dbService } from "./firebase_init.js";
 
 // 🔥Create
-async function writeNftData(tokenId, name, imageUrl, description){
+async function writeNftData(tokenId, name, imageUrl, description, owner){
   try{
     const doc = await addDoc(collection(dbService, "nfts"), {
       tokenId: tokenId,
       name: name,
       imageUrl: imageUrl,
       description: description,
-      createdAt: new Date(Date.now())
+      createdAt: new Date(Date.now()),
+      ownerAccount: owner
     })
     console.log("🌊POST: writeNftData Done");
     return doc;
