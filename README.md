@@ -31,8 +31,6 @@ OpenSea의 아키텍처와 기능을 따라 구현해보는 프로젝트입니�
 
 <br>
 
-## 구현 기능
-
 ## FE
 <img src="/images/stack/FE-structure.png" width="70%" height="70%">
 
