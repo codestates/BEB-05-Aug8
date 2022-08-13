@@ -5,6 +5,7 @@ import Explore from './pages/Explore';
 import Create from './pages/Create';
 import MyCollections from './pages/MyCollections';
 
+
 function App() {
   return (
     <div className="App">
