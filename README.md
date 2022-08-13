@@ -38,6 +38,8 @@ OpenSea의 아키텍처와 기능을 따라 구현해보는 프로젝트입니�
 ### 2. Create
 ### 3. My Collections
 
+<br>
+
 ## BE
 <img src="/images/stack/BE-structure.png" width="70%" height="70%">
 Node.js Express를 활용해서 작성하였으며, AWS EC2를 활용해서 통신 중입니다.  
