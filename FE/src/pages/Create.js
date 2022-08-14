@@ -12,6 +12,7 @@ import {
   import { NFTStorage } from "nft.storage/dist/bundle.esm.min.js";
   import erc721Abi from "../erc721Abi.js";
   import Web3 from 'web3';
+  import './Create.css';
 
   import axios from "axios";
   const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEJCYzIxRTAxYUM3RGNFMjdGYWUyQTczQjIxZUE2RjMyQmMxOWQ2NjAiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY2MDE5NTI5NDUyNSwibmFtZSI6Ik5GVHRlc3QifQ.HCOHDRpYcqw2oLDPkR6_N1HDpc26XY_yIjmQVd8DYXc';
@@ -209,11 +210,14 @@ import {
         justifyContent="center"
         component="form"
       >
-        <img
-          src={imgSrc}
-          alt="preview-img"
-          style={{ height: 200, width: 200 }}
-        />
+        <br></br>
+        <div className="imgContainer">
+          <img
+            src={imgSrc}
+            alt="preview-img"
+            className="sample-img"
+          />
+        </div>
         <label>
           <FormControl>
             <Input
