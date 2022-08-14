@@ -18,7 +18,7 @@ import {
 
   function Create() {
     const baseImage =
-      "https://cdn.pixabay.com/photo/2016/01/03/00/43/upload-1118928_960_720.png";
+      "https://icons-for-free.com/download-icon-file-131964752888364301_512.png";
     const [imgSrc, setImgSrc] = useState(baseImage);
     const [nftName, setNftName] = useState("");
     const [description, setDescription] = useState("");
@@ -209,13 +209,13 @@ import {
         justifyContent="center"
         component="form"
       >
+        <img
+          src={imgSrc}
+          alt="preview-img"
+          style={{ height: 200, width: 200 }}
+        />
         <label>
           <FormControl>
-            <img
-              src={imgSrc}
-              alt="preview-img"
-              style={{ height: 200, width: 200 }}
-            />
             <Input
               type="file"
               id="file"
