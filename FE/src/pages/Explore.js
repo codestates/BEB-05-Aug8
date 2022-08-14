@@ -1,20 +1,21 @@
 import { useState, useEffect } from 'react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import NFTItem from '../components/ExploreNFT';
 import axios from 'axios';
+import './Explore.css'
 
-const NFTListBlock = styled.div`
-  box-sizing: border-box;
-  padding-bottom: 3rem;
-  width: 768px;
-  margin: 0 auto;
-  margin-top: 2rem;
-  @media screen and (max-width: 768px) {
-    width: 100%;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-`;
+// const NFTListBlock = styled.div`
+//   box-sizing: border-box;
+//   padding-bottom: 3rem;
+//   width: 768px;
+//   margin: 0 auto;
+//   margin-top: 2rem;
+//   @media screen and (max-width: 768px) {
+//     width: 100%;
+//     padding-left: 1rem;
+//     padding-right: 1rem;
+//   }
+// `;
 
 const NFTList = () => {
   const [articles, setArticles] = useState(null);
@@ -38,7 +39,8 @@ const NFTList = () => {
 
   // 대기중일 때
   if (loading) {
-    return <NFTListBlock>대기중...</NFTListBlock>;
+    // return <NFTListBlock>대기중...</NFTListBlock>;
+    return <div className='NFTList-block'>대기중</div>;
   }
   // 아직 response 값이 설정되지 않았을 때
   if (!articles) {
@@ -48,7 +50,8 @@ const NFTList = () => {
   const filtered = articles.filter( (item) => item.image_url !== null)
 
   return (
-    <NFTListBlock>
+    // <NFTListBlock>
+    <div className='NFTList-block'>
       <h1>Discover, collect, and sell extraordinary NFTs</h1>
       <br></br>
       <br></br>
@@ -56,7 +59,8 @@ const NFTList = () => {
       {filtered.map(article => (
         <NFTItem key={article.url} article={article} />
       ))}
-    </NFTListBlock>
+    </div>
+    // </NFTListBlock>
   );
 };
 
