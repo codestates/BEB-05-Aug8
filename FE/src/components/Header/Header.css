@@ -64,6 +64,9 @@ a {
   display: flex;
   flex: none;
   height: 50px;
+  width: 190px;
+  object-fit: contain;
+
 }
 
 /* Icon Button */

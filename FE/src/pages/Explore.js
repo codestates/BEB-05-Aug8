@@ -53,9 +53,9 @@ const NFTList = () => {
     // <NFTListBlock>
     <div className='NFTList-block'>
       <h1>Discover, collect, and sell extraordinary NFTs</h1>
+      {/* <br></br>
       <br></br>
-      <br></br>
-      <br></br>
+      <br></br> */}
       {filtered.map(article => (
         <NFTItem key={article.url} article={article} />
       ))}
