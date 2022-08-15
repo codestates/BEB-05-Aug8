@@ -12,13 +12,14 @@ import {
   import { NFTStorage } from "nft.storage/dist/bundle.esm.min.js";
   import erc721Abi from "../erc721Abi.js";
   import Web3 from 'web3';
+  import './Create.css';
 
   import axios from "axios";
   const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEJCYzIxRTAxYUM3RGNFMjdGYWUyQTczQjIxZUE2RjMyQmMxOWQ2NjAiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY2MDE5NTI5NDUyNSwibmFtZSI6Ik5GVHRlc3QifQ.HCOHDRpYcqw2oLDPkR6_N1HDpc26XY_yIjmQVd8DYXc';
 
   function Create() {
     const baseImage =
-      "https://cdn.pixabay.com/photo/2016/01/03/00/43/upload-1118928_960_720.png";
+      "https://icons-for-free.com/download-icon-file-131964752888364301_512.png";
     const [imgSrc, setImgSrc] = useState(baseImage);
     const [nftName, setNftName] = useState("");
     const [description, setDescription] = useState("");
@@ -209,13 +210,16 @@ import {
         justifyContent="center"
         component="form"
       >
+        <br></br>
+        <div className="imgContainer">
+          <img
+            src={imgSrc}
+            alt="preview-img"
+            className="sample-img"
+          />
+        </div>
         <label>
           <FormControl>
-            <img
-              src={imgSrc}
-              alt="preview-img"
-              style={{ height: 200, width: 200 }}
-            />
             <Input
               type="file"
               id="file"
@@ -247,7 +251,7 @@ import {
               setAlert(false);
             }}
           >
-            로그인, 사진, 이름은 필수입니다.
+            사진, 이름은 필수입니다.
           </Alert>
         ) : (
           ""

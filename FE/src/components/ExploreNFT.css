@@ -1,0 +1,46 @@
+.NFTItem-block {
+  /* display: flex-direction: column; */
+  /* display: flex; */
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.thumbnail {
+  margin-right: 5rem;
+  margin-top: 4rem;
+  margin-bottom: 1rem;
+}
+
+img {
+  display: block;
+  border-radius: 20px;
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+}
+  
+.contents {
+    color: blue;
+    
+}
+
+h2 {
+  margin: 0;
+  
+}
+
+.contents a:hover {
+  color: orange;
+}
+
+p:hover {
+  margin: 0;
+  line-height: 1.5;
+  margin-top: 0.5rem;
+  white-space: normal;
+  color: red
+}
+
+/* & + & {
+  margin-top: 3rem;
+} */
