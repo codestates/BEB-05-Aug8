@@ -15,3 +15,8 @@ h1 {
   font-size: 80px;
   text-align: left;
 }
+
+.account {
+  color: gray;
+  font-style: italic;
+}

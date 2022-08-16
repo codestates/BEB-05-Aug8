@@ -19,8 +19,8 @@ function Header() {
         <NavItem openNum={2} open={open} setOpen={setOpen} icon='Create'>
           <DropdownMenu menu={["Minting", "Import an existing Contract"]} href={["/create/minting", "/create/import"]}></DropdownMenu>
         </NavItem>
-        <NavItem openNum={3} open={open} setOpen={setOpen} icon='My Collections'>
-          <DropdownMenu menu={["My Account", "Transfer"]} href={["/my-collections", "/my-collections/transfer"]}></DropdownMenu>
+        <NavItem openNum={3} open={open} setOpen={setOpen} icon='My Page'>
+          <DropdownMenu menu={["My Account", "My Collections"]} href={["/my-account", "/my-collections/"]}></DropdownMenu>
         </NavItem>
       </ul>
     </nav>

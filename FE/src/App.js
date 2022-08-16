@@ -5,6 +5,7 @@ import Explore from './pages/Explore';
 import ExploreDB from './pages/ExploreDB';
 import Create from './pages/Create';
 import CreateByCA from './pages/Create-by-CA';
+import MyAccount from './pages/MyAccount';
 import MyCollections from './pages/MyCollections';
 
 
@@ -18,6 +19,7 @@ function App() {
           <Route path='/explore/*' element={<ExploreDB />}></Route>
           <Route path='/create/minting/*' element={<Create />}></Route>
           <Route path='/create/import/*' element={<CreateByCA />}></Route>
+          <Route path='/my-account/' element={<MyAccount />}></Route>
           <Route path='/my-collections/' element={<MyCollections />}></Route>
         </Routes>
       </BrowserRouter>
