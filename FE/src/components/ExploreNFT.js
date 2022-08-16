@@ -38,18 +38,16 @@ const NFTItem = ({ article }) => {
     <div className='NFTItem-block'>
       {image_thumbnail_url && (
         <div className="thumbnail">
-          <a href={image_url} target="_blank" rel="noopener noreferrer">
-            <img src={image_thumbnail_url} alt="thumbnail" />
+          <a className='aimg' href={image_url} target="_blank" rel="noopener noreferrer">
+            <img className='img' src={image_thumbnail_url} alt="thumbnail" />
           </a>
         </div>
       )}
       <div className="contents">
-        <h2>
-          <a href={image_url} target="_blank" rel="noopener noreferrer">
-            {id}
-          </a>
-        </h2>
-        <p>{name}</p>
+        <p className='contents-number'>
+          {'#'+id}
+        </p>
+        <p className='name'>{name}</p>
       </div>
     </div>
     // </NFTItemBlock>

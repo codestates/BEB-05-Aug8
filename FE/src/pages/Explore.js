@@ -17,7 +17,7 @@ import './Explore.css'
 //   }
 // `;
 
-const NFTList = () => {
+const Explore = () => {
   const [articles, setArticles] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -28,6 +28,7 @@ const NFTList = () => {
         const response = await axios.get(
           'https://testnets-api.opensea.io/api/v1/assets?order_direction=desc&offset=0&limit=100&include_orders=false',
         );
+        console.log(response);
         setArticles(response.data.assets);
       } catch (e){
         console.log(e);
@@ -48,6 +49,7 @@ const NFTList = () => {
   }
 
   const filtered = articles.filter( (item) => item.image_url !== null)
+  console.log("filtered: ", filtered);
 
   return (
     // <NFTListBlock>
@@ -64,4 +66,4 @@ const NFTList = () => {
   );
 };
 
-export default NFTList;
+export default Explore;
