@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 // import styled from 'styled-components';
 import NFTItem from '../components/ExploreNFT2';
 import axios from 'axios';
-import './Explore.css'
+import './css/Explore.css'
 
 // const NFTListBlock = styled.div`
 //   box-sizing: border-box;

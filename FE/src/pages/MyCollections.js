@@ -1,4 +1,4 @@
-import './MyCollections.css';
+import './css/MyCollections.css';
 import {useEffect, useState} from 'react';
 import Web3 from 'web3';
 import erc721Abi from '../erc721Abi';

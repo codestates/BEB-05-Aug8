@@ -18,7 +18,7 @@ function App() {
           <Route path='/explore/*' element={<ExploreDB />}></Route>
           <Route path='/create/minting/*' element={<Create />}></Route>
           <Route path='/create/import/*' element={<CreateByCA />}></Route>
-          <Route path='/my-collections/*' element={<MyCollections />}></Route>
+          <Route path='/my-collections/' element={<MyCollections />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

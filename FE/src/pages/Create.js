@@ -12,7 +12,7 @@ import {
   import { NFTStorage } from "nft.storage/dist/bundle.esm.min.js";
   import erc721Abi from "../erc721Abi.js";
   import Web3 from 'web3';
-  import './Create.css';
+  import './css/Create.css';
 
   import axios from "axios";
   const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEJCYzIxRTAxYUM3RGNFMjdGYWUyQTczQjIxZUE2RjMyQmMxOWQ2NjAiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY2MDE5NTI5NDUyNSwibmFtZSI6Ik5GVHRlc3QifQ.HCOHDRpYcqw2oLDPkR6_N1HDpc26XY_yIjmQVd8DYXc';
