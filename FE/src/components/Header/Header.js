@@ -14,13 +14,13 @@ function Header() {
       </a>
       <ul className="navbar-nav">
         <NavItem openNum={1} open={open} setOpen={setOpen} icon='Explore'>
-          <DropdownMenu menu={["Explore OpenSea NFTs", "Explore uploaded NFTs"]} href={["/explore", "/explore"]}></DropdownMenu>
+          <DropdownMenu menu={["Explore OpenSea NFTs", "Explore uploaded NFTs"]} href={["/", "/explore"]}></DropdownMenu>
         </NavItem>
         <NavItem openNum={2} open={open} setOpen={setOpen} icon='Create'>
           <DropdownMenu menu={["Minting", "Import an existing Contract"]} href={["/create/minting", "/create/import"]}></DropdownMenu>
         </NavItem>
         <NavItem openNum={3} open={open} setOpen={setOpen} icon='My Collections'>
-          <DropdownMenu menu={["My Account", "Transfer"]} href={["/my-collections", "/my-collections"]}></DropdownMenu>
+          <DropdownMenu menu={["My Account", "Transfer"]} href={["/my-collections", "/my-collections/transfer"]}></DropdownMenu>
         </NavItem>
       </ul>
     </nav>
