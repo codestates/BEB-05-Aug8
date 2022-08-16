@@ -9,8 +9,6 @@ import { useState, useEffect } from "react";
 import InputForm from "../components/inputForm.js";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SuccessMinting from "../components/SuccessMinting";
-import { NFTStorage } from "nft.storage/dist/bundle.esm.min.js";
-import erc721Abi from "../erc721Abi.js";
 import Web3 from 'web3';
 import './Create.css';
 
@@ -21,6 +19,7 @@ function CreateByCA() {
   const baseImage =
     "https://icons-for-free.com/download-icon-file-131964752888364301_512.png";
   const [nftName, setNftName] = useState("");
+  const [abiCode, setAbiCode] = useState("");
   const [alert, setAlert] = useState(false);
   const [waitNftMinting, setWaitNftMinting] = useState(false);
   const [successMinting, setSuccessMinting] = useState(false);
@@ -40,8 +39,11 @@ function CreateByCA() {
   const handleChangeNftName = (target) => {
     setNftName(target.value);
   };
+  const handleChangeAbiCode = (target) => {
+    setAbiCode(target.value);
+  };
 
-  async function mintNft(imageUrl) {
+  async function sendNftToDB(){
     // 1. metamask 연결 => accounts[0]이 연결된 account
     const accounts = await window.ethereum.request({
       method: "eth_requestAccounts",
@@ -58,85 +60,42 @@ function CreateByCA() {
       });
     }
 
-    // 2. minting
+    // 2. 하나씩 DB에 넣기
     const tokenContract = await new web3.eth.Contract(
-      erc721Abi,
-      '0xEef7C01b329BcEc42CfFA7fF1F318f47c16c0f7E'
+      abiCode,
+      nftName
     );
+    const tokenCount = await tokenContract.methods.totalSupply().call();
     try{
-      const newTokenId = await tokenContract.methods.mintNFT(accounts[0], imageUrl).send({from:accounts[0]});
-      console.log("Minting Success");
-      return [accounts[0], newTokenId.events.Transfer.returnValues.tokenId];
-    } catch(e) {
-      console.error(e);
+      for(let i=1; i<=tokenCount; i++){
+        var data = JSON.stringify({
+          "tokenId": i,
+          "imageUrl": await tokenContract.methods.tokenUri(i).call(),
+        });
+        
+        var config = {
+          method: 'post',
+          url: 'http://ec2-43-200-175-29.ap-northeast-2.compute.amazonaws.com/nft-metadata',
+          headers: { 
+            'Content-Type': 'application/json'
+          },
+          data : data
+        };
+        
+        await axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+        
+        setSuccessMinting(true); 
+      }
+    } catch (e) {
+      alert("Error 발생");
     }
   }
-
-  const handleCreateButton = async () => {
-      if (nftName === "") {
-          setAlert(true);
-      } else {
-          setAlert(false);
-          try {
-            setWaitNftMinting(true);
-            // 1. 파일 받기
-            const file = document.getElementById('nft-image').files[0];
-
-            // 2. nft.storage에 사진 저장 후 url 받기
-            const storageNft = {
-              image: file,
-              name: nftName
-            }
-            const client = new NFTStorage({ token: API_KEY })
-            const metadata = await client.store(storageNft)
-          
-            console.log(typeof(metadata));
-            console.log('NFT data stored!');
-            console.log('IPFS URL for the metadata:', metadata.url);
-            console.log('metadata.json contents:\n', metadata.data);
-
-            // 3. 해당 url 활용해서 민팅하기
-            const jsonData = JSON.stringify(metadata.data);
-            const obj = JSON.parse(jsonData);
-            const replaceUrl = obj.image.replace("ipfs://","https://ipfs.io/ipfs/");
-            
-            const mintResult = await mintNft(replaceUrl);
-            const ownerAccount = mintResult[0];
-            const tokenId = mintResult[1];
-
-            // 4. DB에 메타데이터 저장
-            var data = JSON.stringify({
-              "tokenId": tokenId,
-              "name": obj.name,
-              "imageUrl": replaceUrl,
-              "description": obj.description,
-              "owner": ownerAccount
-            });
-            
-            var config = {
-              method: 'post',
-              url: 'http://ec2-43-200-175-29.ap-northeast-2.compute.amazonaws.com/nft-metadata',
-              headers: { 
-                'Content-Type': 'application/json'
-              },
-              data : data
-            };
-            
-            await axios(config)
-            .then(function (response) {
-              console.log(JSON.stringify(response.data));
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-            
-            setSuccessMinting(true);
-          
-          } catch (error) {
-          console.log("Error: ", error);
-          }
-      }
-  };
 
   const resetWaitNftMinting = () => {
     setNftName("");
@@ -150,6 +109,13 @@ function CreateByCA() {
       type: "text",
       handler: handleChangeNftName,
       helperText: "Contract Address를 입력해주세요.(Ropsten Network)",
+    },
+    {
+      content: "AbiCode",
+      id: "AbiCode",
+      type: "text",
+      handler: handleChangeAbiCode,
+      helperText: "Abi Code를 입력해주세요.",
     },
   ];
 
@@ -202,7 +168,7 @@ function CreateByCA() {
       ) : (
         ""
       )}
-      <Button sx={{ fontSize: 20, mt: 2 }} onClick={handleCreateButton}>
+      <Button sx={{ fontSize: 20, mt: 2 }} onClick={sendNftToDB}>
         CREATE
       </Button>
     </Stack>
