@@ -32,20 +32,20 @@ import './ExploreNFT.css'
 // `;
 
 const NFTItem = ({ article }) => {
-  const { id, name, image_url, image_thumbnail_url } = article;
+  const { tokenId, name, imageUrl } = article;
   return (
     // <NFTItemBlock>
     <div className='NFTItem-block'>
-      {image_thumbnail_url && (
+      {imageUrl && (
         <div className="thumbnail">
-          <a className='aimg' href={image_url} target="_blank" rel="noopener noreferrer">
-            <img className='img' src={image_thumbnail_url} alt="thumbnail" />
+          <a className='aimg' href={imageUrl} target="_blank" rel="noopener noreferrer">
+            <img className='img' src={imageUrl} alt="thumbnail" />
           </a>
         </div>
       )}
       <div className="contents">
         <p className='contents-number'>
-          {'#'+id}
+          {'#'+tokenId}
         </p>
         <p className='name'>{name}</p>
       </div>

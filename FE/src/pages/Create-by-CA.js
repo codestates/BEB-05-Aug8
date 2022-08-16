@@ -20,9 +20,7 @@ const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweE
 function CreateByCA() {
   const baseImage =
     "https://icons-for-free.com/download-icon-file-131964752888364301_512.png";
-  const [imgSrc, setImgSrc] = useState(baseImage);
   const [nftName, setNftName] = useState("");
-  const [description, setDescription] = useState("");
   const [alert, setAlert] = useState(false);
   const [waitNftMinting, setWaitNftMinting] = useState(false);
   const [successMinting, setSuccessMinting] = useState(false);
@@ -39,24 +37,8 @@ function CreateByCA() {
     }
   }, []);
 
-  const handleImagePreview = (target) => { // blob 변환 
-    const fileBlob = target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(fileBlob);
-    return new Promise((resolve) => {
-      reader.onload = () => {
-        setImgSrc(reader.result);
-        resolve();
-      };
-    });
-  };
-
   const handleChangeNftName = (target) => {
     setNftName(target.value);
-  };
-
-  const handleChangeDescription = (target) => {
-    setDescription(target.value);
   };
 
   async function mintNft(imageUrl) {
@@ -91,7 +73,7 @@ function CreateByCA() {
   }
 
   const handleCreateButton = async () => {
-      if (imgSrc === baseImage || nftName === "") {
+      if (nftName === "") {
           setAlert(true);
       } else {
           setAlert(false);
@@ -103,8 +85,7 @@ function CreateByCA() {
             // 2. nft.storage에 사진 저장 후 url 받기
             const storageNft = {
               image: file,
-              name: nftName,
-              description: description,
+              name: nftName
             }
             const client = new NFTStorage({ token: API_KEY })
             const metadata = await client.store(storageNft)
@@ -158,32 +139,17 @@ function CreateByCA() {
   };
 
   const resetWaitNftMinting = () => {
-    setImgSrc(baseImage);
     setNftName("");
     setWaitNftMinting(false);
   };
 
   const contents = [
     {
-      content: "",
-      id: "nft-image",
-      type: "file",
-      handler: handleImagePreview,
-      helperText: "이미지를 선택해주세요",
-    },
-    {
-      content: "NFT-Name",
-      id: "nft-name",
+      content: "ContractAddress",
+      id: "ContractAddress",
       type: "text",
       handler: handleChangeNftName,
-      helperText: "NFT의 이름을 입력해주세요",
-    },
-    {
-      content: "Description",
-      id: "description",
-      type: "text",
-      handler: handleChangeDescription,
-      helperText: "간단한 설명을 입력해주세요",
+      helperText: "Contract Address를 입력해주세요.(Ropsten Network)",
     },
   ];
 
@@ -193,7 +159,7 @@ function CreateByCA() {
     ) : (
       <Stack alignItems="center">
         <CircularProgress></CircularProgress>
-        NFT 민팅 중... Please Wait...
+        NFT를 DB에 업로드 중....
       </Stack>
     )
   ) : (
