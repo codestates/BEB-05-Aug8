@@ -17,16 +17,8 @@ function MyAccount() {
 
   const [web3, setWeb3] = useState();
   const [account, setAccount] = useState('연결 안 됨');
-  const [accountBuyer, setAccountBuyer] = useState('연결 안 됨');
   const [balance, setBalance] = useState(0);
-  const [balanceBuyer, setBalanceBuyer] = useState(0);
-  const [newErc721addr, setNewErc721Addr] = useState();
-  const [erc721list, setErc721list] = useState([]);
-  const [newErc20addr, setNewErc20Addr] = useState();
-  const [erc20list, setErc20list] = useState([]);
   const rpcURL = "https://ropsten.infura.io/v3/8bcf24fad93341fd9e58dde29957446c";
-  const [marketplace, setMarketplace] = useState({})
-
 
   useEffect(() => {
     if(typeof window.ethereum !== "undefined"){ // if window.ethereum 이 있다면
@@ -46,10 +38,6 @@ function MyAccount() {
       }
     }
   }, []);
-  const loadMarketContracts = async (signer) =>{
-    // const marketplace = new ethers.Contract(erc721Abi, marketplaceContracts, signer)
-    
-  }
 
   const connectWallet = async () => {
     const accounts = await window.ethereum.request({
@@ -62,44 +50,16 @@ function MyAccount() {
     })
   }
 
-// metamask 연결 → address → ropsten 이더 잔액 확인하는 web3.js call()
-  const addNewErc721Token = async () => {
-    const tokenContract = await new web3.eth.Contract( // define contract object
-      erc721Abi,
-      newErc721addr
-    );
-
-    // 새롭게 민팅된 721이 있으면 그것에 맞는 abi(고정 - 같은 token 안 이므로), addr이 업데이트 되어야함.
-    const name = await tokenContract.methods.name().call();
-    const symbol = await tokenContract.methods.symbol().call();
-    const totalSupply = await tokenContract.methods.totalSupply().call();
-
-    let arr = [];
-    for(let i=1; i <= totalSupply; i++){
-      arr.push(i);
-    }
-
-    for(let tokenId of arr){
-      let tokenOwner = await tokenContract.methods.ownerOf(tokenId).call();
-
-      if(String(tokenOwner).toLowerCase() === account){
-        let tokenURI = await tokenContract.methods.tokenURI(tokenId).call();
-        setErc721list((prevState) => {
-          return [...prevState, {name, symbol, tokenId, tokenURI, "address":newErc721addr}];
-        })
-      }
-    }
-  }
-
   return (
     <div className="App">
+      <br></br>
       <button 
         className="metaConnect"
         onClick={() => {
           connectWallet();
         }}
       >
-        connect to MetaMask
+        Check My Account Info
       </button>
       <div className='userInfo'>addr: {account}</div>
       <div className='balance'>balance : {balance} ETH</div>
