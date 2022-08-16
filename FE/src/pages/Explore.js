@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 // import styled from 'styled-components';
-import NFTItem from '../components/ExploreNFT';
+import NFTItem from '../components/ExploreNFT2';
 import axios from 'axios';
 import './Explore.css'
 
